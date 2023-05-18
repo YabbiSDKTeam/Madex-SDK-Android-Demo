@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.application'
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def MADEX_PUBLISHER_ID = properties.getProperty('MADEX_PUBLISHER_ID') ?: ""
+def MADEX_INTERSTITIAL_ID = properties.getProperty('MADEX_INTERSTITIAL_ID') ?: ""
+def MADEX_REWARDED_ID = properties.getProperty('MADEX_REWARDED_ID') ?: ""
+def YANDEX_INTERSTITIAL_ID = properties.getProperty('YANDEX_INTERSTITIAL_ID') ?: ""
+def YANDEX_REWARDED_ID = properties.getProperty('YANDEX_REWARDED_ID') ?: ""
+def MINTEGRAL_APP_ID = properties.getProperty('MINTEGRAL_APP_ID') ?: ""
+def MINTEGRAL_API_KEY = properties.getProperty('MINTEGRAL_API_KEY') ?: ""
+def MINTEGRAL_INTERSTITIAL_PLACEMENT_ID = properties.getProperty('MINTEGRAL_INTERSTITIAL_PLACEMENT_ID') ?: ""
+def MINTEGRAL_INTERSTITIAL_ID = properties.getProperty('MINTEGRAL_INTERSTITIAL_ID') ?: ""
+def MINTEGRAL_REWARDED_PLACEMENT_ID = properties.getProperty('MINTEGRAL_REWARDED_PLACEMENT_ID') ?: ""
+def MINTEGRAL_REWARDED_ID = properties.getProperty('MINTEGRAL_REWARDED_ID') ?: ""
+def IRON_SOURCE_APP_ID = properties.getProperty('IRON_SOURCE_APP_ID') ?: ""
+def IRON_SOURCE_INTERSTITIAL_ID = properties.getProperty('IRON_SOURCE_INTERSTITIAL_ID') ?: ""
+def IRON_SOURCE_REWARDED_ID = properties.getProperty('IRON_SOURCE_REWARDED_ID') ?: ""
+
+android {
+    namespace 'me.madex.ads.demo'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "me.madex.ads.demo"
+        minSdk 19
+        targetSdk 33
+        versionCode 1
+        versionName "1.0.0"
+
+        multiDexEnabled true
+
+        buildConfigField "String", "MADEX_PUBLISHER_ID", "\"${MADEX_PUBLISHER_ID}\""
+        buildConfigField "String", "MADEX_INTERSTITIAL_ID", "\"${MADEX_INTERSTITIAL_ID}\""
+        buildConfigField "String", "MADEX_REWARDED_ID", "\"${MADEX_REWARDED_ID}\""
+        buildConfigField "String", "YANDEX_INTERSTITIAL_ID", "\"${YANDEX_INTERSTITIAL_ID}\""
+        buildConfigField "String", "YANDEX_REWARDED_ID", "\"${YANDEX_REWARDED_ID}\""
+        buildConfigField "String", "MINTEGRAL_APP_ID", "\"${MINTEGRAL_APP_ID}\""
+        buildConfigField "String", "MINTEGRAL_API_KEY", "\"${MINTEGRAL_API_KEY}\""
+        buildConfigField "String", "MINTEGRAL_INTERSTITIAL_PLACEMENT_ID", "\"${MINTEGRAL_INTERSTITIAL_PLACEMENT_ID}\""
+        buildConfigField "String", "MINTEGRAL_INTERSTITIAL_ID", "\"${MINTEGRAL_INTERSTITIAL_ID}\""
+        buildConfigField "String", "MINTEGRAL_REWARDED_PLACEMENT_ID", "\"${MINTEGRAL_REWARDED_PLACEMENT_ID}\""
+        buildConfigField "String", "MINTEGRAL_REWARDED_ID", "\"${MINTEGRAL_REWARDED_ID}\""
+        buildConfigField "String", "IRON_SOURCE_APP_ID", "\"${IRON_SOURCE_APP_ID}\""
+        buildConfigField "String", "IRON_SOURCE_INTERSTITIAL_ID", "\"${IRON_SOURCE_INTERSTITIAL_ID}\""
+        buildConfigField "String", "IRON_SOURCE_REWARDED_ID", "\"${IRON_SOURCE_REWARDED_ID}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    implementation 'me.madex.ads:core:1.0.0' // Это обязательная зависимость SDK
+    implementation 'me.madex.ads.adapters:yandex:1.0.0' // Это рекламная сеть Yandex
+    implementation 'me.madex.ads.adapters:ironsource:1.0.0' // Это рекламная сеть IronSource
+    implementation 'me.madex.ads.adapters:mintegral:1.0.0' // Это рекламная сеть Mintegral
+}

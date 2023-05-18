@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Madex SDK Android Demo</string>
+    <string name="destroy_interstitial">Destroy Interstitial Ad</string>
+    <string name="load_interstitial">Load Interstitial Ad</string>
+    <string name="show_interstitial">Show Interstitial Ad</string>
+    <string name="destroy_rewarded">Destroy Rewarded Ad</string>
+    <string name="load_rewarded">Load Rewarded Ad</string>
+    <string name="show_rewarded">Show Rewarded Ad</string>
+    <string name="interstitial_ad">Interstitial Ad</string>
+    <string name="rewarded_ad">Rewarded Ad</string>
+    <string name="load_rewarded_ad">Load Rewarded Ad</string>
+    <string name="show_rewarded_ad">Show Rewarded Ad</string>
+    <string name="destroy_rewarded_ad">Destroy Rewarded Ad</string>
+    <string name="consent_manager">Consent Manager</string>
+    <string name="show_consent">Show Consent</string>
+    <string name="events">Events</string>
+    <string name="events_will_appear_here">Events will appear here...</string>
+</resources>

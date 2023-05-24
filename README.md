@@ -149,24 +149,21 @@ Madex.setUserConsent(true);
 ### Установка возрастного ограничение
 Посредническая платформа ironSource позволяет издателям передавать настройки возрастных ограничений.
 
-* Используйте следующий код, чтобы установить возрастное ограничение для `AppLovin` с параметром
-  `true`:
+* Используйте следующий код, чтобы установить возрастное ограничение для `AppLovin`:
     ```java
-    Madex.setMetaData("AppLovin_AgeRestrictedUser","true");
+    Madex.setMetaData("AppLovin_AgeRestrictedUser", "true");
     ```
-
-* Используйте следующий код, чтобы установить возрастное ограничение для `Digital Turbine` с параметром `true`:
+* Используйте следующий код, чтобы установить возрастное ограничение для `Digital Turbine`:
     ```java
-    Madex.setMetaData("DT_IsChild","true");
+    Madex.setMetaData("DT_IsChild", "true");
     ```
-
-* Используйте следующий код, чтобы установить возрастное ограничение для `InMobi` с параметром `true`:
+* Используйте следующий код, чтобы установить возрастное ограничение для `InMobi`:
     ```java
-    Madex.setMetaData("InMobi_AgeRestricted","true");
+    Madex.setMetaData("InMobi_AgeRestricted", "true");
     ```
-* Используйте следующий код, чтобы установить возрастное ограничение для `UnityAds`с параметром `true`:
+* Используйте следующий код, чтобы установить возрастное ограничение для `UnityAds`:
     ```java
-    Madex.setMetaData("UnityAds_coppa","true");
+    Madex.setMetaData("UnityAds_coppa", "true");
     ```
 
 ### Инициализация
@@ -191,11 +188,11 @@ import me.madex.ads.MadexRewardedListener;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    super.onCreate(savedInstanceState);
 
-        Madex.setUserConsent(true);
-        Madex.initialize("замените_на_свой_id");
-        }
+    Madex.setUserConsent(true);
+    Madex.initialize("замените_на_свой_id");
+}
 ```
 
 ## Режим отладки

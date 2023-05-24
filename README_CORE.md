@@ -2,7 +2,7 @@
 
 ## Руководство по Интеграции
 
-Версия релиза **1.0.2** | Дата релиза **24.05.2023**
+Версия релиза **1.0.0** | Дата релиза **18.05.2023**
 
 > Минимальные требования:
 >
@@ -23,6 +23,8 @@
 
 В зависимости от используемой версии Android Studio вставьте зависимость в файл Gradle.
 
+Если вы используете адаптеры для сторонних рекламных сетей,так же добавьте их зависимости.
+
 1. Вставьте следующий код в settings.gradle в корне проекта.  
    **Начиная с Arctic Fox и выше**
     ```gradle
@@ -38,6 +40,9 @@
             maven {
                 url 'https://android-sdk.is.com' // Это репозиторий IronSource
             }
+            maven {
+                url  "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea"  // Это репозиторий для Mintegral
+            }
         }
     }
     ```
@@ -48,12 +53,15 @@
     
     allprojects {
         repositories {
-            // ... другие репозитории
+            // ... other project repositories
             maven {
                 url "https://mobileadx.ru/maven" // Это репозиторий Madex
             }
             maven {
                 url 'https://android-sdk.is.com' // Это репозиторий IronSource
+            }
+            maven {
+                url  "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea"  // Это репозиторий для Mintegral
             }
         }
     }
@@ -80,13 +88,27 @@
     }
    ```
 3. В этом же файле обновите раздел `dependencies`
+   * Для подключения плагина со всеми рекламными сетями вставьте следующий код.
    ```gradle
     // Пример app-level build.gradle
     
     dependencies {
         // ... другие зависимости проекта
 
-        implementation 'me.madex.ads:advert:1.0.1' // Это плагин Madex SDK
+        implementation 'me.madex.ads:sdk:2.4.1' // Это плагин Madex SDK
+    }
+   ```
+   * Вы можете подключить рекламные сети выборочно. Для этого вставьте следующий код.
+   ```gradle
+    // Пример app-level build.gradle
+    
+    dependencies {
+        // ... другие зависимости проекта
+
+        implementation 'me.madex.ads:core:1.0.0' // Это обязательная зависимость SDK
+        implementation 'me.madex.ads.adapters:yandex:1.0.0' // Это рекламная сеть Yandex
+        implementation 'me.madex.ads.adapters:ironsource:1.0.0' // Это рекламная сеть IronSource
+        implementation 'me.madex.ads.adapters:mintegral:1.0.0' // Это рекламная сеть Mintegral
     }
    ```
 
@@ -129,8 +151,10 @@
 Импортируйте `Madex`.
 ```java
 import me.madex.ads.Madex;
+import me.madex.ads.MadexConfiguration;
 import me.madex.ads.MadexInterstitialListener;
 import me.madex.ads.MadexRewardedListener;
+import me.madex.ads.mediation.MadexAdapterCustomKeys;
 ```
 
 ### Сбор данных пользователя
@@ -146,39 +170,58 @@ GDPR - Это набор правил, призванных дать гражд�
 Madex.setUserConsent(true);
 ```
 
-### Установка возрастного ограничение
-Посредническая платформа ironSource позволяет издателям передавать настройки возрастных ограничений.
+### Работа сторонних рекламных сетей
+Для работы сторонних рекламных сетей необходимо добавить идентификаторы для каждой рекламной сети.
+```java
+// Установите для показа полноэкранной рекламы Яндекса
+Madex.setCustomParams(MadexAdapterCustomKeys.yandexInterstitialID, "замените_на_свой_id");
 
-* Используйте следующий код, чтобы установить возрастное ограничение для `AppLovin` с параметром
-  `true`:
-    ```java
-    Madex.setMetaData("AppLovin_AgeRestrictedUser","true");
-    ```
+// Установите для показа рекламы с вознаграждением Яндекса
+Madex.setCustomParams(MadexAdapterCustomKeys.yandexInterstitialID, "замените_на_свой_id");
 
-* Используйте следующий код, чтобы установить возрастное ограничение для `Digital Turbine` с параметром `true`:
-    ```java
-    Madex.setMetaData("DT_IsChild","true");
-    ```
+// Установите для показа рекламы от IronSource
+Madex.setCustomParams(MadexAdapterCustomKeys.ironSourceAppID, "замените_на_свой_id");
 
-* Используйте следующий код, чтобы установить возрастное ограничение для `InMobi` с параметром `true:
-    ```java
-    Madex.setMetaData("InMobi_AgeRestricted","true");
-    ```
-* Используйте следующий код, чтобы установить возрастное ограничение для `UnityAds`с параметром `true:
-    ```java
-    Madex.setMetaData("UnityAds_coppa","true");
-    ```
+// Установите для показа полноэкранной рекламы IronSource
+Madex.setCustomParams(MadexAdapterCustomKeys.ironSourceInterstitialPlacementID, "замените_на_свой_id");
+
+// Установите для показа рекламы с вознаграждением IronSource
+Madex.setCustomParams(MadexAdapterCustomKeys.ironSourceRewardedPlacementID, "замените_на_свой_id");
+
+// Установите для показа рекламы от Mintegral
+Madex.setCustomParams(MadexAdapterCustomKeys.mintegralAppID, "замените_на_свой_id");
+Madex.setCustomParams(MadexAdapterCustomKeys.mintegralApiKey, "замените_на_свой_id");
+
+// Установите для показа полноэкранной рекламы Mintegral
+Madex.setCustomParams(MadexAdapterCustomKeys.mintegralInterstitialPlacementId, "замените_на_свой_id");
+Madex.setCustomParams(MadexAdapterCustomKeys.mintegralInterstitialUnitId, "замените_на_свой_id");
+
+// Установите для показа рекламы с вознаграждением Mintegral
+Madex.setCustomParams(MadexAdapterCustomKeys.mintegralRewardedPlacementId, "замените_на_свой_id");
+Madex.setCustomParams(MadexAdapterCustomKeys.mintegralRewardedUnitId, "замените_на_свой_id");
+```
+> Используйте метод `setCustomParams` до вызова метода `initialize`.
 
 ### Инициализация
 Теперь SDK готова к инициализации. Используйте код ниже, чтобы SDK заработал в вашем проекте.
 ```java
-Madex.initialize(app_id);
+final MadexConfiguration config = new MadexConfiguration(
+    "publisher_id",
+    "interstitial_id",
+    "rewarded_id"
+);
+
+Madex.initialize(config);
 ```
 
-* `app_id` - идентификатор приложения.
+* `publisher_id` - идентификатор издателя. Обязателен для заполнения.
+* `interstitial_id` - идентификатор полноэкранной рекламы. Может оставаться пустой строкой.
+* `rewarded_id` - идентификатор полноэкранной рекламы с вознаграждением. Может оставаться пустой строкой.
 
 
-Замените `app_id` на идентификатор приложения из [личного кабинета](https://platform.ironsrc.com/partners/dashboard).
+1. Замените `publisher_id` на идентификатор издателя из [личного кабинета](https://mobileadx.ru/settings).
+2. Замените `interstitial_id` на ключ соответствующий баннерной рекламе из [личного кабинета](https://mobileadx.ru).
+3. Замените `rewarded_id` на ключ соответствующий видео с вознаграждением из [личного кабинета](https://mobileadx.ru).
 
 Ниже представлен полный код.
 
@@ -186,16 +229,44 @@ Madex.initialize(app_id);
 
 ```java
 import me.madex.ads.Madex;
+import me.madex.ads.MadexConfiguration;
 import me.madex.ads.MadexInterstitialListener;
 import me.madex.ads.MadexRewardedListener;
+import me.madex.ads.mediation.MadexAdapterCustomKeys;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    super.onCreate(savedInstanceState);
 
-        Madex.setUserConsent(true);
-        Madex.initialize("замените_на_свой_id");
-        }
+    Madex.setCustomParams(MadexAdapterCustomKeys.yandexInterstitialID, "замените_на_свой_id");
+
+    Madex.setCustomParams(MadexAdapterCustomKeys.yandexInterstitialID, "замените_на_свой_id");
+
+    Madex.setCustomParams(MadexAdapterCustomKeys.ironSourceAppID, "замените_на_свой_id");
+
+    Madex.setCustomParams(MadexAdapterCustomKeys.ironSourceInterstitialPlacementID, "замените_на_свой_id");
+
+    Madex.setCustomParams(MadexAdapterCustomKeys.ironSourceRewardedPlacementID, "замените_на_свой_id");
+
+    Madex.setCustomParams(MadexAdapterCustomKeys.mintegralAppID, "замените_на_свой_id");
+    Madex.setCustomParams(MadexAdapterCustomKeys.mintegralApiKey, "замените_на_свой_id");
+
+    Madex.setCustomParams(MadexAdapterCustomKeys.mintegralInterstitialPlacementId, "замените_на_свой_id");
+    Madex.setCustomParams(MadexAdapterCustomKeys.mintegralInterstitialUnitId, "замените_на_свой_id");
+
+    Madex.setCustomParams(MadexAdapterCustomKeys.mintegralRewardedPlacementId, "замените_на_свой_id");
+    Madex.setCustomParams(MadexAdapterCustomKeys.mintegralRewardedUnitId, "замените_на_свой_id");
+
+    final MadexConfiguration config = new MadexConfiguration(
+        "publisher_id",
+        "interstitial_id",
+        "rewarded_id"
+    );
+    
+    Madex.setUserConsent(true);
+    
+    Madex.initialize(config);
+}
 ```
 
 ## Режим отладки

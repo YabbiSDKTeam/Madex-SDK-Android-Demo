@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import me.madex.ads.Madex;
-import me.madex.ads.MadexConfiguration;
 import me.madex.ads.MadexInterstitialListener;
 import me.madex.ads.MadexRewardedListener;
-import me.madex.ads.mediation.MadexAdapterCustomKeys;
 
 public class MainActivity extends AppCompatActivity {
     private TextView logger;
@@ -24,11 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setButtons() {
         findViewById(R.id.load_interstitial_button).setOnClickListener(v -> Madex.loadAd(this, Madex.INTERSTITIAL));
-        findViewById(R.id.show_interstitial_button).setOnClickListener(v -> Madex.showAd(this, Madex.INTERSTITIAL));
+        findViewById(R.id.show_interstitial_button).setOnClickListener(v -> Madex.showAd(this, Madex.INTERSTITIAL, BuildConfig.IRON_SOURCE_INTERSTITIAL_ID));
         findViewById(R.id.destroy_interstitial_button).setOnClickListener(v -> Madex.destroyAd(Madex.INTERSTITIAL));
 
         findViewById(R.id.load_rewarded_button).setOnClickListener(v -> Madex.loadAd(this, Madex.REWARDED));
-        findViewById(R.id.show_rewarded_button).setOnClickListener(v -> Madex.showAd(this, Madex.REWARDED));
+        findViewById(R.id.show_rewarded_button).setOnClickListener(v -> Madex.showAd(this, Madex.REWARDED, BuildConfig.IRON_SOURCE_REWARDED_ID));
         findViewById(R.id.destroy_rewarded_button).setOnClickListener(v -> Madex.destroyAd(Madex.REWARDED));
 
         findViewById(R.id.show_consent_button).setOnClickListener(v -> {});
@@ -37,25 +35,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSDK() {
-        Madex.setCustomParams(MadexAdapterCustomKeys.yandexInterstitialID, BuildConfig.YANDEX_INTERSTITIAL_ID);
-        Madex.setCustomParams(MadexAdapterCustomKeys.yandexRewardedID, BuildConfig.YANDEX_REWARDED_ID);
-
-        Madex.setCustomParams(MadexAdapterCustomKeys.mintegralAppID, BuildConfig.MINTEGRAL_APP_ID);
-        Madex.setCustomParams(MadexAdapterCustomKeys.mintegralApiKey, BuildConfig.MINTEGRAL_API_KEY);
-        Madex.setCustomParams(MadexAdapterCustomKeys.mintegralInterstitialPlacementId, BuildConfig.MINTEGRAL_INTERSTITIAL_PLACEMENT_ID);
-        Madex.setCustomParams(MadexAdapterCustomKeys.mintegralInterstitialUnitId, BuildConfig.MINTEGRAL_INTERSTITIAL_ID);
-        Madex.setCustomParams(MadexAdapterCustomKeys.mintegralRewardedPlacementId, BuildConfig.MINTEGRAL_REWARDED_PLACEMENT_ID);
-        Madex.setCustomParams(MadexAdapterCustomKeys.mintegralRewardedUnitId, BuildConfig.MINTEGRAL_REWARDED_ID);
-        Madex.setCustomParams(MadexAdapterCustomKeys.ironSourceAppID, BuildConfig.IRON_SOURCE_APP_ID);
-        Madex.setCustomParams(MadexAdapterCustomKeys.ironSourceInterstitialPlacementID, BuildConfig.IRON_SOURCE_INTERSTITIAL_ID);
-        Madex.setCustomParams(MadexAdapterCustomKeys.ironSourceRewardedPlacementID, BuildConfig.IRON_SOURCE_REWARDED_ID);
-
         Madex.enableDebug(true);
-        final MadexConfiguration config = new MadexConfiguration(BuildConfig.MADEX_PUBLISHER_ID, BuildConfig.MADEX_INTERSTITIAL_ID, BuildConfig.MADEX_REWARDED_ID);
-
         Madex.setUserConsent(true);
 
-        Madex.initialize(config);
+        Madex.initialize(BuildConfig.IRON_SOURCE_APP_ID);
 
         logEvent("Madex initialized");
     }

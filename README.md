@@ -160,11 +160,11 @@ Madex.setUserConsent(true);
     Madex.setMetaData("DT_IsChild","true");
     ```
 
-* Используйте следующий код, чтобы установить возрастное ограничение для `InMobi` с параметром `true:
+* Используйте следующий код, чтобы установить возрастное ограничение для `InMobi` с параметром `true`:
     ```java
     Madex.setMetaData("InMobi_AgeRestricted","true");
     ```
-* Используйте следующий код, чтобы установить возрастное ограничение для `UnityAds`с параметром `true:
+* Используйте следующий код, чтобы установить возрастное ограничение для `UnityAds`с параметром `true`:
     ```java
     Madex.setMetaData("UnityAds_coppa","true");
     ```

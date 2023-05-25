@@ -86,7 +86,7 @@
     dependencies {
         // ... другие зависимости проекта
 
-        implementation 'me.madex.ads:advert:1.0.1' // Это плагин Madex SDK
+        implementation 'me.madex.ads:advert:1.0.2' // Это плагин Madex SDK
     }
    ```
 
@@ -152,10 +152,6 @@ Madex.setUserConsent(true);
 * Используйте следующий код, чтобы установить возрастное ограничение для `AppLovin`:
     ```java
     Madex.setMetaData("AppLovin_AgeRestrictedUser", "true");
-    ```
-* Используйте следующий код, чтобы установить возрастное ограничение для `Digital Turbine`:
-    ```java
-    Madex.setMetaData("DT_IsChild", "true");
     ```
 * Используйте следующий код, чтобы установить возрастное ограничение для `InMobi`:
     ```java
